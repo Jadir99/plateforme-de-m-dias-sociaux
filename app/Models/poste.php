@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class poste extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'id_poste';
     public function author(){
         return $this->belongsTo(User::class,'id');
     }

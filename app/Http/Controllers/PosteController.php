@@ -10,6 +10,7 @@ class PosteController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $primaryKey = 'id_poste';
     public function index()
     {
         $postes=poste::all();

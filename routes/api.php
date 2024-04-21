@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource("/postes", posteApiConntroller::class);
+Route::put('postes/{id}', [posteApiConntroller::class, 'update']);
 Route::apiResource("/comments", commentaireApiConntroller::class);
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
