@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class hashtag extends Model
 {
     use HasFactory;
+    protected $primaryKey='hashtag_id';
     // show all posts that relate with thishashtag 
     public function all_posts(){       
 

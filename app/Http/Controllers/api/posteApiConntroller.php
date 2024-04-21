@@ -53,7 +53,7 @@ private function removehashtags($text)
     {
         
         $users=poste::all();
-        return response()->json(['poste' => $users], 200);
+        return response()->json(['poste' => $users], 201);
     }
 
     /**
@@ -203,6 +203,9 @@ private function removehashtags($text)
     {
         // delete the poste 
         $poste = poste::find($id);
+        if ($poste==NULL){
+            return response()->json(['error 404' => 'poste not found'], 404);
+        }
         $poste->delete();
         return response()->json(['message' => 'poste deleted successfully'], 200);
     }

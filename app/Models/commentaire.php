@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class commentaire extends Model
 {
     use HasFactory;
+    
+    protected $primaryKey='comment_id';
 }

@@ -12,7 +12,7 @@ class Hashtag_posteApiConntroller extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

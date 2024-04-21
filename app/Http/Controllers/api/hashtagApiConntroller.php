@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\hashtag;
-use Dotenv\Validator;
+use App\Models\hashtag_poste;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Facades\Validator;
 
 class hashtagApiConntroller extends Controller
 {
@@ -15,7 +15,8 @@ class hashtagApiConntroller extends Controller
      */
     public function index()
     {
-        //
+        $hashtags=hashtag::all();
+        return response()->json(['hashtags'=>$hashtags],200);
     }
 
     /**
@@ -23,8 +24,7 @@ class hashtagApiConntroller extends Controller
      */
     public function store(Request $request)
     {
-        $validator = FacadesValidator::make($request->all(), [
-            'hashtag_id' => 'required|Integer',
+        $validator = Validator::make($request->all(), [
             'hashtag_text' => 'required|string',
         ]);
         if ($validator->fails()){
@@ -32,10 +32,10 @@ class hashtagApiConntroller extends Controller
         }
         // creat new hashtag
         $hashtag=new hashtag();
-        $hashtag->hashtag_id=$request->input('hashtag_id');
         $hashtag->hashtag=$request->input('hashtag_text');
         $hashtag->save();
         return response()->json(['message' => 'hshtag created successfully'], 201);
+        
     }
 
     /**
@@ -43,7 +43,12 @@ class hashtagApiConntroller extends Controller
      */
     public function show(string $id)
     {
-        //
+        $hashtag=hashtag::find($id);
+        if (!$hashtag)
+            return response()->json(['erreur'=>'the hashtag not found'],404);
+        
+        return response()->json(['hashtag'=>$hashtag],200);
+        
     }
 
     /**
@@ -51,7 +56,20 @@ class hashtagApiConntroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'hashtag_text' => 'required|string',
+        ]);
+        echo $request->input('hashtag_text');
+        if ($validator->fails()){
+            return response()->json(['error' =>"error"], 400);
+        }
+        // creat new hashtag
+        $hashtag= hashtag::find($id);
+        if(!$hashtag)
+            return response()->json(['error' =>'not found'], 404);
+        $hashtag->hashtag=$request->input('hashtag_text');
+        $hashtag->update();
+        return response()->json(['message' => 'hshtag updated successfully'], 201);
     }
 
     /**
@@ -59,6 +77,10 @@ class hashtagApiConntroller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $hashtag=hashtag::find($id);
+        if(!$hashtag)
+            return response()->json(['error' =>"error"], 400);
+        $hashtag->delete();
+        return response()->json(['message' => 'hashtag deleted successfully'], 200);
     }
 }

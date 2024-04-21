@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\commentaireApiConntroller;
+use App\Http\Controllers\Api\hashtagApiConntroller;
 use App\Http\Controllers\Api\posteApiConntroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource("/postes", posteApiConntroller::class);
-Route::put('postes/{id}', [posteApiConntroller::class, 'update']);
+Route::apiResource("/hashtags", hashtagApiConntroller::class);
 Route::apiResource("/comments", commentaireApiConntroller::class);
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
