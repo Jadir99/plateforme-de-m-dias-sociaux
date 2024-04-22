@@ -92,7 +92,6 @@ private function removehashtags($text)
         if ($validator->fails()) {
             return response()->json(['error' =>"error"], 400);
         }
-
         $poste = new poste();
         // $poste->id_poste = $request->input('id_poste');
         $poste->text_poste = ($request->input('text_poste'));
@@ -101,10 +100,11 @@ private function removehashtags($text)
         $poste->save();
         // l'ajout en joinre table 
         foreach ($hashtags_used as $hashtag){
-            if (!hashtag::where('hashtag_id', $hashtag)->exists() || !hashtag::where('id_poste', $hashtag)->exists()){
+            if (!hashtag_poste::where('hashtag_id', $hashtag)->exists() || !hashtag_poste::where('id_poste', $poste->id_poste)->exists()){
+                
                 $new_hashtag_poste=new hashtag_poste();
                 $new_hashtag_poste->date_ajout= Carbon::now();
-                $new_hashtag_poste->id_poste=$request->input('user_id');
+                $new_hashtag_poste->id_poste= $poste->id_poste;
                 $new_hashtag_poste->hashtag_id= $hashtag;
                 $new_hashtag_poste->save();
             }

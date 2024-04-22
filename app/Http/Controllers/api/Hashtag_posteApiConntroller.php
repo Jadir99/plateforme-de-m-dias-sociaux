@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\hashtag_poste;
 use Illuminate\Http\Request;
 
 class Hashtag_posteApiConntroller extends Controller
@@ -20,7 +21,7 @@ class Hashtag_posteApiConntroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // existe pas
     }
 
     /**
@@ -28,7 +29,11 @@ class Hashtag_posteApiConntroller extends Controller
      */
     public function show(string $id)
     {
-        //
+        // using hashtag id to show all postes by hashtag
+        $postes_byhashtag=hashtag_poste::where('hashtag_id',$id)->get();
+        if($postes_byhashtag==NULL)return response()->json(['errer'=>'erreur'],400);
+        return response()->json(['postes'=>$postes_byhashtag],200);
+        
     }
 
     /**

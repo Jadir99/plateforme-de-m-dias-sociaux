@@ -90,7 +90,7 @@ class commentaireApiConntroller extends Controller
         $commentaire= commentaire::find($id);
         if(!$commentaire)
             return response()->json(['error' =>'not found'], 400);
-        $commentaire->delet();
+        $commentaire->delete();
         return response()->json(['success' =>'the commentaire was deleted'], 200);
     }
 }
