@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class like extends Model
 {
     use HasFactory;
+    protected $primaryKey='like_id';
 }
